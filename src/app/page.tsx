@@ -1,72 +1,61 @@
 'use client';
 
-import Head from 'next/head';
-import * as React from 'react';
-import '@/lib/env';
-
-import ArrowLink from '@/components/links/ArrowLink';
-import ButtonLink from '@/components/links/ButtonLink';
-import UnderlineLink from '@/components/links/UnderlineLink';
-import UnstyledLink from '@/components/links/UnstyledLink';
-
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-import Logo from '~/svg/Logo.svg';
-
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
+import React, { useState } from 'react';
 
 export default function HomePage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <main>
-      <Head>
-        <title>Hi</title>
-      </Head>
-      <section className='bg-white'>
-        <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
-          <Logo className='w-16' />
-          <h1 className='mt-4'>Next.js + Tailwind CSS + TypeScript Starter</h1>
-          <p className='mt-2 text-sm text-gray-800'>
-            A starter for Next.js, Tailwind CSS, and TypeScript with Absolute
-            Import, Seo, Link component, pre-configured with Husky{' '}
-          </p>
-          <p className='mt-2 text-sm text-gray-700'>
-            <ArrowLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
-              See the repository
-            </ArrowLink>
-          </p>
+    <main className="h-screen flex flex-col items-center justify-center bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4">
+      <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center">
+        Olá Gabi, bora fazer coisas incríveis em 2025?
+      </h1>
 
-          <ButtonLink className='mt-6' href='/components' variant='light'>
-            See all components
-          </ButtonLink>
+      <div className="flex flex-col sm:flex-row gap-6">
+        {/* Botão Sim */}
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="relative px-8 py-4 bg-gradient-to-r from-green-400 to-green-600 text-lg md:text-xl font-semibold text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300"
+        >
+          Sim
+        </button>
 
-          <UnstyledLink
-            href='https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter'
-            className='mt-4'
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              width='92'
-              height='32'
-              src='https://vercel.com/button'
-              alt='Deploy with Vercel'
-            />
-          </UnstyledLink>
+        {/* Botão Não */}
+        <button
+          onMouseEnter={(e) => {
+            const button = e.currentTarget;
+            const randomX = Math.random() * 200 - 100; // Movimento no eixo X
+            const randomY = Math.random() * 100 - 50; // Movimento no eixo Y
+            button.style.transform = `translate(${randomX}px, ${randomY}px)`;
+          }}
+          className="relative px-8 py-4 bg-gradient-to-r from-red-400 to-red-600 text-lg md:text-xl font-semibold text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform"
+        >
+          Não
+        </button>
+      </div>
 
-          <footer className='absolute bottom-2 text-gray-700'>
-            © {new Date().getFullYear()} By{' '}
-            <UnderlineLink href='https://theodorusclarence.com?ref=tsnextstarter'>
-              Theodorus Clarence
-            </UnderlineLink>
-          </footer>
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">
+          <div className="bg-white text-black p-6 rounded-lg shadow-lg max-w-md w-full">
+            <h2 className="text-xl md:text-2xl font-bold mb-4 text-center">
+              Simmmm! 🥰
+            </h2>
+            <p className="text-center">
+               Mal posso esperar para fazer 2025 ser o
+              nosso ano mais especial. ❤️
+            </p>
+            <div className="mt-4 flex justify-center">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+              >
+                Fechar
+              </button>
+            </div>
+          </div>
         </div>
-      </section>
+      )}
     </main>
   );
 }
